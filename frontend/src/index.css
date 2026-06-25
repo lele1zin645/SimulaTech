@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+  }
+}
+
+/* ---- Markdown renderizado (feedback e resposta ideal) ---- */
+.markdown p {
+  @apply mb-3 leading-relaxed;
+}
+.markdown p:last-child {
+  @apply mb-0;
+}
+.markdown strong {
+  @apply font-semibold text-ink;
+}
+.markdown ul,
+.markdown ol {
+  @apply mb-3 ml-5 list-disc space-y-1;
+}
+.markdown ol {
+  @apply list-decimal;
+}
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  @apply mb-2 mt-4 font-semibold text-ink;
+}
+.markdown h3 {
+  @apply text-base;
+}
+
+/* Código inline */
+.markdown :not(pre) > code {
+  @apply rounded bg-surface-ring px-1.5 py-0.5 font-mono text-[0.85em] text-primary-dark;
+}
+
+/* Bloco de código (tema escuro dentro da UI clara) */
+.markdown pre {
+  @apply my-3 overflow-x-auto rounded-xl bg-[#0d1117] p-4 text-sm leading-relaxed;
+}
+.markdown pre code {
+  @apply font-mono text-[#e6edf3];
+  background: transparent;
+}
+
+/* ---- Tema de syntax highlight (highlight.js github-dark, enxuto) ---- */
+.hljs-comment,
+.hljs-quote {
+  color: #8b949e;
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in {
+  color: #ff7b72;
+}
+.hljs-string,
+.hljs-attr,
+.hljs-template-variable {
+  color: #a5d6ff;
+}
+.hljs-title,
+.hljs-function .hljs-title,
+.hljs-section {
+  color: #d2a8ff;
+}
+.hljs-number,
+.hljs-literal,
+.hljs-type {
+  color: #79c0ff;
+}
+.hljs-name,
+.hljs-tag {
+  color: #7ee787;
+}
+.hljs-variable,
+.hljs-params {
+  color: #ffa657;
+}
+
+/* animação suave de entrada das telas */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-up {
+  animation: fadeUp 0.35s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    animation: none;
+  }
+}
