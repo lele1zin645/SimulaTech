@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Send, Info, Lightbulb, Timer, Loader2 } from "lucide-react";
+import { Send, Lightbulb, Gauge, Loader2, MoreHorizontal, TerminalSquare } from "lucide-react";
 
 const MAX_CARACTERES = 2000;
 
@@ -16,7 +16,6 @@ export default function QuestionScreen({
   const [segundos, setSegundos] = useState(0);
   const textareaRef = useRef(null);
 
-  // Cronômetro de tempo decorrido na questão atual.
   useEffect(() => {
     setSegundos(0);
     setResposta("");
@@ -24,12 +23,11 @@ export default function QuestionScreen({
     return () => clearInterval(intervalo);
   }, [pergunta]);
 
-  // Textarea que cresce conforme o usuário digita.
   useEffect(() => {
     const el = textareaRef.current;
     if (el) {
       el.style.height = "auto";
-      el.style.height = Math.max(el.scrollHeight, 160) + "px";
+      el.style.height = Math.max(el.scrollHeight, 200) + "px";
     }
   }, [resposta]);
 
@@ -39,44 +37,53 @@ export default function QuestionScreen({
 
   return (
     <div className="fade-up space-y-5">
-      {/* Card da pergunta */}
-      <div className="rounded-xl bg-surface-card p-6 shadow-soft">
-        <p className="text-sm font-semibold text-primary">
-          Questão {numero} de {total}
-          {categoria && (
-            <span className="text-ink-soft"> · {categoria}</span>
-          )}
-        </p>
-        <h2 className="mt-2 text-2xl font-semibold leading-snug text-ink">
+      <div className="panel overflow-hidden">
+        <div className="flex items-center justify-between border-b border-line bg-surface-low px-4 py-2.5">
+          <span className="label-caps text-ink-dim">
+            Questão {numero} de {total}
+            {categoria && <span className="text-cyan"> · {categoria}</span>}
+          </span>
+          <MoreHorizontal size={18} className="text-ink-dim" />
+        </div>
+        <h2 className="px-6 py-5 text-2xl font-semibold leading-snug text-ink">
           {pergunta}
         </h2>
       </div>
 
-      {/* Área de resposta */}
-      <div className="rounded-xl bg-surface-card p-4 shadow-soft">
-        <textarea
-          ref={textareaRef}
-          value={resposta}
-          onChange={(e) =>
-            setResposta(e.target.value.slice(0, MAX_CARACTERES))
-          }
-          placeholder="Digite sua resposta detalhada aqui..."
-          disabled={carregando}
-          className="w-full resize-none bg-transparent text-base text-ink outline-none placeholder:text-ink-soft/70 disabled:opacity-60"
-          style={{ minHeight: 160 }}
-        />
-        <div className="mt-1 text-right text-sm text-ink-soft">
-          {resposta.length} / {MAX_CARACTERES} caracteres
+      <div className="panel overflow-hidden">
+        <div className="flex items-center gap-2 border-b border-line bg-surface-low px-4 py-2.5">
+          <span className="flex gap-1.5">
+            <span className="h-3 w-3 rounded-full bg-rose/80" />
+            <span className="h-3 w-3 rounded-full bg-amber/80" />
+            <span className="h-3 w-3 rounded-full bg-[#7ee787]/80" />
+          </span>
+          <span className="ml-2 font-mono text-xs text-ink-dim">
+            response_buffer.tsx
+          </span>
+        </div>
+        <div className="grid-bg">
+          <textarea
+            ref={textareaRef}
+            value={resposta}
+            onChange={(e) => setResposta(e.target.value.slice(0, MAX_CARACTERES))}
+            placeholder="// Digite sua resposta técnica aqui..."
+            disabled={carregando}
+            className="w-full resize-none bg-transparent px-4 py-4 font-mono text-sm text-ink outline-none placeholder:text-ink-dim/70 disabled:opacity-60"
+            style={{ minHeight: 200 }}
+          />
+          <div className="px-4 pb-2 text-right font-mono text-xs text-ink-dim">
+            {resposta.length} / {MAX_CARACTERES} chars
+          </div>
         </div>
       </div>
 
-      <p className="flex items-center gap-2 px-1 text-sm text-ink-soft">
-        <Info size={16} className="shrink-0 text-primary" />
-        Sua resposta será analisada por nossa IA especializada.
+      <p className="flex items-center gap-2 px-1 font-mono text-xs text-ink-dim">
+        <TerminalSquare size={15} className="shrink-0 text-cyan" />
+        Motor de análise por IA ativo · verificação de profundidade habilitada
       </p>
 
       {erro && (
-        <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700">
+        <p className="rounded-lg border border-rose/30 bg-rose/10 px-3 py-2 text-sm text-rose">
           {erro}
         </p>
       )}
@@ -84,43 +91,43 @@ export default function QuestionScreen({
       <button
         onClick={() => onEnviar(resposta)}
         disabled={!podeEnviar}
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3.5 font-semibold text-white shadow-lift transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
+        className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary-btn py-3.5 font-mono text-sm font-bold uppercase tracking-wider text-white transition hover:shadow-glow-indigo disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:shadow-none"
       >
         {carregando ? (
           <>
-            <Loader2 size={20} className="animate-spin" />
-            Avaliando sua resposta...
+            <Loader2 size={18} className="animate-spin" />
+            Avaliando resposta
           </>
         ) : (
           <>
             Enviar resposta
-            <Send size={18} />
+            <Send size={16} />
           </>
         )}
       </button>
 
-      {/* Dica de especialista */}
-      <div className="rounded-xl bg-surface-muted p-5">
-        <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
-          <Lightbulb size={20} />
-          Dica de Especialista
+      <div className="panel p-5">
+        <h3 className="flex items-center gap-2 label-caps text-primary">
+          <Lightbulb size={16} />
+          Documentation Snippet
         </h3>
-        <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-          Estruture sua resposta com começo, meio e fim: contextualize o
-          problema, explique seu raciocínio e finalize com um exemplo concreto.
-          Em questões técnicas, mencionar trade-offs costuma impressionar.
+        <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+          <span className="font-mono text-cyan">@dica:</span> estruture a resposta
+          com começo, meio e fim — contextualize o problema, explique o raciocínio
+          e finalize com um exemplo. Em questões técnicas, citar{" "}
+          <code className="rounded border border-line/70 bg-surface-lowest px-1 py-0.5 font-mono text-xs text-cyan">
+            trade-offs
+          </code>{" "}
+          costuma impressionar.
         </p>
       </div>
 
-      {/* Cronômetro */}
-      <div className="rounded-xl bg-gradient-to-br from-primary-light to-primary p-6 text-center text-white">
-        <Timer size={28} className="mx-auto" />
-        <p className="mt-2 font-mono text-3xl font-semibold tabular-nums">
+      <div className="panel grid-bg p-6 text-center">
+        <Gauge size={26} className="mx-auto text-cyan" />
+        <p className="mt-2 font-mono text-3xl font-semibold tabular-nums text-cyan">
           {mm}:{ss}
         </p>
-        <p className="mt-1 text-xs font-medium uppercase tracking-wider text-white/80">
-          Tempo decorrido
-        </p>
+        <p className="mt-1 label-caps text-ink-dim">Tempo decorrido</p>
       </div>
     </div>
   );

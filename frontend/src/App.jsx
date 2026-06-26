@@ -9,22 +9,14 @@ import FeedbackScreen from "./components/FeedbackScreen";
 const TOTAL_QUESTOES = 8;
 
 export default function App() {
-  // Em qual tela estamos: "setup" | "question" | "feedback"
   const [tela, setTela] = useState("setup");
-
-  // Configuração escolhida no setup
   const [config, setConfig] = useState({ cargo: "", tipo: "" });
-
-  // Dados da questão/avaliação atuais
   const [pergunta, setPergunta] = useState("");
   const [feedback, setFeedback] = useState(null);
   const [numeroQuestao, setNumeroQuestao] = useState(0);
-
-  // Estados de UI
   const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState("");
 
-  // Inicia a simulação: gera a primeira pergunta.
   async function iniciar(cargo, tipo) {
     setErro("");
     setCarregando(true);
@@ -41,7 +33,6 @@ export default function App() {
     }
   }
 
-  // Envia a resposta do usuário para avaliação.
   async function enviar(resposta) {
     setErro("");
     setCarregando(true);
@@ -57,7 +48,6 @@ export default function App() {
     }
   }
 
-  // Gera a próxima pergunta com a mesma configuração.
   async function proxima() {
     setErro("");
     setCarregando(true);
@@ -89,11 +79,7 @@ export default function App() {
         )}
 
         {tela === "setup" && (
-          <SetupScreen
-            onIniciar={iniciar}
-            carregando={carregando}
-            erro={erro}
-          />
+          <SetupScreen onIniciar={iniciar} carregando={carregando} erro={erro} />
         )}
 
         {tela === "question" && (
@@ -117,10 +103,10 @@ export default function App() {
         )}
       </main>
 
-      <footer className="border-t border-surface-ring/70 px-4 py-8 text-center">
-        <p className="font-semibold text-ink">SimulaTech</p>
-        <p className="mt-1 text-sm text-ink-soft">
-          © 2026 SimulaTech. Technical Excellence.
+      <footer className="border-t border-line/60 px-4 py-8 text-center">
+        <p className="label-caps text-ink">SimulaTech Engineering</p>
+        <p className="mt-1.5 font-mono text-xs text-ink-dim">
+          © 2026 SimulaTech. All rights reserved.
         </p>
       </footer>
     </div>

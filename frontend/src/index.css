@@ -4,11 +4,26 @@
 
 @layer base {
   body {
-    @apply bg-surface text-ink font-sans antialiased;
+    @apply bg-bg text-ink font-sans antialiased;
   }
 }
 
-/* ---- Markdown renderizado (feedback e resposta ideal) ---- */
+@layer components {
+  .label-caps {
+    @apply font-mono text-xs font-semibold uppercase tracking-wider;
+  }
+  .panel {
+    @apply rounded-lg border border-line bg-surface;
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+}
+
+/* ---- Markdown renderizado (tema dark) ---- */
 .markdown p {
   @apply mb-3 leading-relaxed;
 }
@@ -34,21 +49,22 @@
   @apply text-base;
 }
 
-/* Código inline */
 .markdown :not(pre) > code {
-  @apply rounded bg-surface-ring px-1.5 py-0.5 font-mono text-[0.85em] text-primary-dark;
+  @apply rounded border border-line/70 bg-surface-lowest px-1.5 py-0.5 font-mono text-[0.85em] text-cyan;
 }
 
-/* Bloco de código (tema escuro dentro da UI clara) */
 .markdown pre {
-  @apply my-3 overflow-x-auto rounded-xl bg-[#0d1117] p-4 text-sm leading-relaxed;
+  @apply my-3 overflow-x-auto rounded-lg border border-line bg-[#08090d] p-4 text-sm leading-relaxed;
+  border-top: 2px solid #818cf8;
 }
 .markdown pre code {
   @apply font-mono text-[#e6edf3];
   background: transparent;
+  border: 0;
+  padding: 0;
 }
 
-/* ---- Tema de syntax highlight (highlight.js github-dark, enxuto) ---- */
+/* ---- Syntax highlight (github-dark, enxuto) ---- */
 .hljs-comment,
 .hljs-quote {
   color: #8b949e;
@@ -82,7 +98,7 @@
   color: #ffa657;
 }
 
-/* animação suave de entrada das telas */
+/* ---- animações ---- */
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -96,8 +112,31 @@
 .fade-up {
   animation: fadeUp 0.35s ease-out both;
 }
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .fade-up {
+  .fade-up,
+  .pulse-glow {
     animation: none;
   }
+}
+
+/* scrollbar discreta no tema dark */
+textarea::-webkit-scrollbar {
+  width: 8px;
+}
+textarea::-webkit-scrollbar-thumb {
+  background: #34343b;
+  border-radius: 4px;
 }

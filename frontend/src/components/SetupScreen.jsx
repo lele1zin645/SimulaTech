@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  SlidersHorizontal,
+  TerminalSquare,
   Rocket,
   Clock,
   Gauge,
@@ -8,6 +8,7 @@ import {
   BarChart3,
   TrendingUp,
   Loader2,
+  ChevronsUpDown,
 } from "lucide-react";
 
 const CARGOS = [
@@ -23,19 +24,19 @@ const CARGOS = [
 const FEATURES = [
   {
     icon: Code2,
-    titulo: "Feedback em Tempo Real",
+    titulo: "FEEDBACK EM TEMPO REAL",
     texto:
       "Receba sugestões de melhoria enquanto codifica ou responde perguntas técnicas.",
   },
   {
     icon: BarChart3,
-    titulo: "Relatórios Detalhados",
+    titulo: "RELATÓRIOS DETALHADOS",
     texto:
       "Análise completa da sua performance após cada sessão de entrevista simulada.",
   },
   {
     icon: TrendingUp,
-    titulo: "Evolução de Carreira",
+    titulo: "EVOLUÇÃO DE CARREIRA",
     texto:
       "Acompanhe seu progresso e identifique áreas que precisam de mais estudo.",
   },
@@ -44,14 +45,12 @@ const FEATURES = [
 export default function SetupScreen({ onIniciar, carregando, erro }) {
   const [cargo, setCargo] = useState("");
   const [tipo, setTipo] = useState("");
-
   const podeIniciar = cargo && tipo && !carregando;
 
   return (
     <div className="fade-up space-y-10">
-      {/* Hero */}
       <div className="pt-4 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+        <h1 className="text-5xl font-extrabold tracking-tight text-ink">
           SimulaTech
         </h1>
         <p className="mx-auto mt-3 max-w-md text-base text-ink-soft sm:text-lg">
@@ -59,23 +58,22 @@ export default function SetupScreen({ onIniciar, carregando, erro }) {
         </p>
       </div>
 
-      {/* Card de configuração */}
-      <div className="rounded-xl bg-surface-card p-6 shadow-soft sm:p-7">
+      <div className="panel p-6 shadow-glow-indigo/0 sm:p-7">
         <div className="flex items-start gap-4">
-          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-primary text-white">
-            <SlidersHorizontal size={22} />
+          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg border border-line bg-surface-high text-primary">
+            <TerminalSquare size={22} />
           </span>
           <div>
-            <h2 className="text-xl font-semibold text-ink">
+            <h2 className="font-mono text-xl font-bold uppercase tracking-wide text-ink">
               Configurar Simulação
             </h2>
-            <p className="mt-0.5 text-sm text-ink-soft">
+            <p className="mt-1 label-caps text-cyan">
               Personalize sua experiência de treino
             </p>
           </div>
         </div>
 
-        <div className="mt-6 space-y-5">
+        <div className="mt-7 space-y-5">
           <Campo label="Vaga pretendida">
             <Select
               value={cargo}
@@ -84,7 +82,6 @@ export default function SetupScreen({ onIniciar, carregando, erro }) {
               options={CARGOS}
             />
           </Campo>
-
           <Campo label="Tipo de entrevista">
             <Select
               value={tipo}
@@ -98,8 +95,14 @@ export default function SetupScreen({ onIniciar, carregando, erro }) {
           </Campo>
         </div>
 
+        <div className="mt-6 flex gap-1.5">
+          <span className="h-1 flex-1 rounded-full bg-cyan shadow-glow-cyan" />
+          <span className="h-1 flex-1 rounded-full bg-line" />
+          <span className="h-1 flex-1 rounded-full bg-line" />
+        </div>
+
         {erro && (
-          <p className="mt-5 rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-700">
+          <p className="mt-5 rounded-lg border border-rose/30 bg-rose/10 px-3 py-2 text-sm text-rose">
             {erro}
           </p>
         )}
@@ -107,17 +110,17 @@ export default function SetupScreen({ onIniciar, carregando, erro }) {
         <button
           onClick={() => onIniciar(cargo, tipo)}
           disabled={!podeIniciar}
-          className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3.5 font-semibold text-white shadow-lift transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
+          className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-primary-btn py-3.5 font-mono text-sm font-bold uppercase tracking-wider text-white transition hover:shadow-glow-indigo disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:shadow-none"
         >
           {carregando ? (
             <>
-              <Loader2 size={20} className="animate-spin" />
-              Gerando pergunta...
+              <Loader2 size={18} className="animate-spin" />
+              Gerando pergunta
             </>
           ) : (
             <>
               Iniciar simulação
-              <Rocket size={20} />
+              <Rocket size={18} />
             </>
           )}
         </button>
@@ -128,18 +131,17 @@ export default function SetupScreen({ onIniciar, carregando, erro }) {
         </div>
       </div>
 
-      {/* Features */}
       <div className="space-y-4">
         {FEATURES.map((f) => (
           <div
             key={f.titulo}
-            className="rounded-xl bg-surface-card p-5 shadow-soft"
+            className="panel p-5 transition-colors hover:border-line-strong"
           >
-            <span className="grid h-10 w-10 place-items-center rounded-lg bg-surface-muted text-primary">
+            <span className="grid h-10 w-10 place-items-center rounded-lg border border-line bg-surface-high text-primary">
               <f.icon size={20} />
             </span>
-            <h3 className="mt-4 text-lg font-semibold text-ink">{f.titulo}</h3>
-            <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
+            <h3 className="mt-4 label-caps text-base text-ink">{f.titulo}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-ink-soft">
               {f.texto}
             </p>
           </div>
@@ -152,9 +154,7 @@ export default function SetupScreen({ onIniciar, carregando, erro }) {
 function Campo({ label, children }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-sm font-medium text-ink-soft">
-        {label}
-      </span>
+      <span className="mb-2 block label-caps text-ink-dim">{label}</span>
       {children}
     </label>
   );
@@ -167,9 +167,9 @@ function Select({ value, onChange, placeholder, options }) {
         value={value}
         onChange={onChange}
         className={[
-          "w-full appearance-none rounded-lg border border-surface-ring bg-white px-4 py-3 pr-10 text-sm outline-none transition",
-          "focus:border-primary focus:ring-2 focus:ring-primary/20",
-          value ? "text-ink" : "text-ink-soft",
+          "w-full appearance-none rounded-lg border border-line bg-surface-lowest px-4 py-3 pr-10 font-mono text-sm outline-none transition",
+          "focus:border-primary-btn focus:shadow-glow-indigo",
+          value ? "text-ink" : "text-ink-dim",
         ].join(" ")}
       >
         <option value="" disabled>
@@ -179,32 +179,24 @@ function Select({ value, onChange, placeholder, options }) {
           const val = typeof opt === "string" ? opt : opt.value;
           const lbl = typeof opt === "string" ? opt : opt.label;
           return (
-            <option key={val} value={val} className="text-ink">
+            <option key={val} value={val} className="bg-surface text-ink">
               {lbl}
             </option>
           );
         })}
       </select>
-      <svg
-        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-soft"
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      >
-        <path d="m6 9 6 6 6-6" />
-      </svg>
+      <ChevronsUpDown
+        size={16}
+        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-dim"
+      />
     </div>
   );
 }
 
 function Chip({ icon: Icon, texto }) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-surface-muted px-3 py-1.5 text-xs font-medium text-ink-soft">
-      <Icon size={14} className="text-primary" />
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 label-caps text-ink-soft">
+      <Icon size={13} className="text-cyan" />
       {texto}
     </span>
   );

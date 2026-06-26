@@ -4,33 +4,51 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Paleta vinda do DESIGN.md do protótipo (indigo como primária)
-        primary: {
-          DEFAULT: "#4f46e5", // indigo principal das ações
-          light: "#6366f1", // hover / realces
-          dark: "#4338ca",
-        },
+        bg: "#121319",
         surface: {
-          DEFAULT: "#f8f9ff", // fundo geral (slate bem claro)
-          card: "#ffffff", // cards
-          muted: "#eff4ff", // áreas de destaque suave
-          ring: "#e5eeff",
+          lowest: "#0d0e14",
+          low: "#1b1b22",
+          DEFAULT: "#1f1f26",
+          high: "#292930",
+          highest: "#34343b",
+        },
+        line: {
+          DEFAULT: "#454653",
+          strong: "#908f9e",
         },
         ink: {
-          DEFAULT: "#0b1c30", // texto principal
-          soft: "#464554", // texto secundário
+          DEFAULT: "#e4e1eb",
+          soft: "#c6c5d5",
+          dim: "#908f9e",
+        },
+        primary: {
+          DEFAULT: "#bdc2ff",
+          btn: "#818cf8",
+          on: "#131e8c",
+        },
+        cyan: {
+          DEFAULT: "#5de6ff",
+        },
+        amber: {
+          DEFAULT: "#f7bd3e",
+        },
+        rose: {
+          DEFAULT: "#ffb4ab",
         },
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
-        mono: ["Geist", "ui-monospace", "monospace"],
+        mono: ["'JetBrains Mono'", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        // "Soft Large" definida no design system
-        soft: "0 10px 25px -5px rgba(11,28,48,0.06), 0 8px 10px -6px rgba(11,28,48,0.05)",
-        lift: "0 12px 24px -6px rgba(79,70,229,0.35)",
+        "glow-indigo": "0 0 18px rgba(129,140,248,0.45)",
+        "glow-cyan": "0 0 14px rgba(93,230,255,0.35)",
+        "glow-green": "0 0 22px rgba(52,211,153,0.45)",
+        "glow-amber": "0 0 22px rgba(247,189,62,0.4)",
+        "glow-rose": "0 0 22px rgba(255,180,171,0.4)",
       },
       borderRadius: {
+        lg: "1rem",
         xl: "1.5rem",
       },
     },
