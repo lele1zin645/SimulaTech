@@ -295,4 +295,4 @@ publicação nas duas plataformas.
 
 ## Autor
 
-Desenvolvido por [lele1zin645](https://github.com/lele1zin645).
+Desenvolvido por <a href="https://github.com/lele1zin645"><img src="https://github.com/lele1zin645.png" width="45" height="45"></a> &nbsp;
